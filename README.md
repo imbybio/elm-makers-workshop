@@ -240,7 +240,7 @@ As ever, there is [great documentation](http://package.elm-lang.org/packages/elm
 ### Vector graphics
 
 Elm supports SVG out of the box via the `elm-lang/svg` package, which once
-again come with [documentation](http://package.elm-lang.org/packages/elm-lang/svg/latest)
+again comes with [documentation](http://package.elm-lang.org/packages/elm-lang/svg/latest)
 
 ### Explore other packages
 
