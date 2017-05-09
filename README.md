@@ -1,55 +1,18 @@
 # Makers Academy Elm workshop
 
 This repository contains the code and explanation required to follow the
-Makers Academy Elm workshop given in London on 12th April 2017. The idea is
-to build a very simple Elm app that produces a list of
-[novels nominated for the 2017 Hugo Awards](http://www.tor.com/2017/04/04/2017-hugo-award-finalists-announced/).
+Makers Academy Elm workshop given in London on 10th May 2017. The idea is
+to build a very simple 'hello world' Elm app.
+
+This tutorial is released under a [CC-BY](https://creativecommons.org/licenses/by/4.0/)
+license so feel free to update and share it as you wish.
 
 ## Pre-requisites
 
-In order to follow the workshop, you need to install `Elm` and `json-server`.
-To do this, first install [Node.js](https://nodejs.org/en/download/) and `npm`.
-Once this is done, you can run:
+There are no pre-requisites for this workshop as everything will be done in
+a web browser.
 
-    npm install -g elm
-    npm install -g json-server
-
-To check that Elm is installed, you can try to run the `repl` (^D to exit):
-
-    elm repl
-
-Once Elm is installed, clone this repository, navigate to the newly created
-directory and download dependencies:
-
-    elm package install
-
-## Content
-
-This repository contains a number of files that will be used as part of the
-workshop. First, some house-keeping files:
-
-- `README.md`: this file
-- `LICENSE`: a copy of the open source license this code is released under, in
-  this case the BSD3 license in keeping with the Elm defaults
-- `.gitignore`: the file that tells `git` to ignore all Elm build artefacts
-
-Then, there is the Elm package file that tells the `elm package` utility what
-dependencies to download and build. This is the bare minimum you need to
-define an Elm project:
-
-- `elm-package.json`
-
-A couple of Elm modules that will be used during the workshop:
-
-- `Book.elm`: a module the describe a `Book` data type and associated functions
-- `Mock.elm`: a module that defines mock data to get started
-
-And finally, a database file to use with `json-server` that contains a JSON
-version of `Mock.elm` and that will be used to bring up an API service:
-
-- `hugo.json`
-
-## Workshop
+## Elm: the basics
 
 ### Why is Elm different?
 
@@ -104,89 +67,188 @@ is fed back to the `view` function.
 More advanced functionality can be added through subscriptions and commands but
 the core loop stays the same.
 
-### Create a model and display it
+### Syntax
 
-Let's start coding by creating a `Main.elm` file that will contain:
+The basic Elm syntax is simple:
 
-- a very basic model that is just a string
-- a view function that displays the string
-- a `Html.beginnerProgram` that wires everything together
+- module and type names start with an uppercase letter, such as `Html` or `String`;
+  note that by convention, a lot of modules define a type of the same name
+- variable and function names start with a lowercase letter, such as `view` or
+  `model`
+- a function is called by just referencing it followed by its arguments, such as
+  `view model`, and can be enclosed in braces when grouping is necessary, such
+  as `(view model)`.
+- variables and functions are declared in the same way, with an optional type
+  definition followed by an implementation:
 
-Everything needed is in the core and html packages and you can find the
-documentation online:
+    defaultModel : String
+    defaultModel = "Hello world!"
 
-- [Core](http://package.elm-lang.org/packages/elm-lang/core/latest/)
-- [Html](http://package.elm-lang.org/packages/elm-lang/html/latest)
+    view : String -> Html Msg
+    view model = Html.text model
 
-Run the program by starting `elm reactor` and navigating to
-[http://localhost:8000/Main.elm](http://localhost:8000/Main.elm).
+- lists are defined with square brackets: `[1, 2, 3]` and all items in the list
+  need to be of the same type
+- records are defined with curly brackets: `{ name = "Bob", age = 23 }` and
+  each field can have its own type
 
-### A more complicated model
+## Tasks
 
-Let's update the model to a data structure with a `books` field that is a list
-of `Book`s, initialise it via `Mock.data` and display all books in order with
-a suitable title on top. Note: the `Book` module has a `viewSummary` function
-to do that for an individual book and `List.map` is your friend to do it for
-all books.
+### Ellie and a first Elm app
 
-### Add a control to the page
+We are going to use the Ellie web app for this tutorial. Ellie is a web based
+Elm editor and compiler, which you can find at: [https://ellie-app.com/](https://ellie-app.com/)
 
-A static page is boring so let's make it interactive by adding a checkbox to
-the top of the page. When that checkbox is checked, we should show full details
-for each of the books, when it's unchecked, we should just show the summary for
-each book. To do this, you will need to:
+When you first open Ellie, you will see a very simple app. To see what it does,
+just click the `Compile` button and the result will appear in the right hand side
+of the screen. The default code does 3 things:
 
-- add a field to the model that keeps the value of the checkbox
-- change the `view` function to display the checkbox
-- implement an `update` function that updates that field when the checkbox is
-  clicked (use the `Html.Events` package to wire it all together)
-- use the `Book.view` function rather than the `Book.viewSummary` one
+- it declares a `Main` module:
 
-### Get the data from a REST API
+    module Main exposing (..)
 
-Using mock data is too easy so let's get it from an API instead. You can get
-a suitable API up and running by starting the JSON server:
+- it imports the `Html` module and exposes the `Html.Html` type as well as the
+  `Html.text` function:
 
-    json-server hugo.json
+    import Html exposing (Html, text)
 
-This will make a resource available at
-[http://localhost:3000/novels](http://localhost:3000/novels) that we will need
-to call from the Elm program. For this you will need to:
+- it declares and implements a `main` function:
+
+    main : Html a
+    main =
+        text "Hello, World!"
+
+This is very simple but not very useful as it is just a static piece of code
+and doesn't implement the Elm loop mentioned above.
+
+On the left hand side, there is a `Packages` section that shows what packages
+are imported in the app, in the case `elm-lang/core` and `elm-lang/html`; you
+can find their documentation online:
+
+- [elm-lang/core](http://package.elm-lang.org/packages/elm-lang/core/latest/)
+- [elm-lang/html](http://package.elm-lang.org/packages/elm-lang/html/latest)
+
+### Implement the Elm loop
+
+Change the Elm app to introduce the program loop using `Html.beginnerProgram`.
+This function takes a single record argument with 3 fields:
+
+    { model : model
+    , view : model -> Html msg
+    , update : msg -> model -> model
+    }
+
+The `model` field is a simple value with a parameterised type called `model`
+that will be used to initalise our model. As it's a parameterised type, we can
+choose to use any type we want, in our case it will be a string set to the
+value `"Hello, World!"`.
+
+The `view` field is a function that takes one argument of type `model` and
+returns a value of type `Html msg`. We will implement that function explicitly.
+
+The `update` field is a function that takes two arguments of types `msg` and
+`model` and returns a value of type `model`. We will provide a dummy value
+for this.
+
+To implement the program loop, we just need to call `Html.beginnerProgram` in
+our `main` function (note that the type signature changes):
+
+    main : Program Never String msg
+    main = Html.beginnerProgram
+        { model = "Hello, World!"
+        , view = view
+        , update = (\_ -> \model -> model)
+        }
+
+Note that update is implemented as an inline function. We also need to implement
+the view function. As we decided to use the `String` type for our model, that's
+what the view function needs to take as its first argument so the signature
+should match. Implement the function so that the text is included in an HTML
+`p` tag. Most functions in the `Html` package, and in particular the `p`
+function take two arguments: a list of HTML attributes and a list of sub-tags.
+
+### Add a button that changes the model
+
+Change the app to include a button that changes the model to `"Goodbye, World!"`.
+To do this, you will need to:
+
+- implement a union type for the message
+- implement an `update` function that will change the model depending on the
+  message passed
+- wire the button in the view using the `Html.Events.onClick` function
+
+Union types are a bit like an enumeration of possible values except that each
+of them can be a complex type and they are defined as follows:
+
+    type Msg
+        = SayGoodbye
+        | SayHello
+
+In order to check what value a variable of such a type has, we can use a `case`
+statement:
+
+    case msg of
+        SayGoodbye -> "Goodbye, World!"
+
+As we decided to use `Msg` for our message type, the first argument of the
+`update` function will need to be of that type and the signatures of the
+`main` and `view` functions will need to reflect this. As we decided to use
+`String` for our model type, the second argument of the `update` function
+will need to be of that type.
+
+### Update the text via a text field
+
+Another way to update the text is to take user input via a test field. To do
+that, you will need to add another message that is able to take a `String` as
+a parameter so that is can be used by `Html.Events.onInput` and wire that
+message in the `view` function.
+
+### Update the text on button click
+
+With the previous implementation, the text is updated as soon as any character
+is entered in the text box. Change the program so that it's only updated when
+a button is clicked. You will need to:
+
+- change the model so that it holds the text field content separately from the
+  displayed text
+- add a button that updates the text using the value passed in the message
+
+## Beyond the workshop
+
+Here are a few ideas of additional things to do to go beyond this workshop.
+
+### Compile locally
+
+Reproduce everything by installing the Elm compiler on your machine so that
+you don't have to rely on a web app. To do that, install it via `npm`:
+
+    npm install -g elm
+
+You will need to create a `elm-package.json` file and install dependencies:
+
+    elm package install
+
+You can then move all your code into a `Main.elm` file and run it:
+
+    elm reactor
+
+You should then be able to see your app at
+[http://localhost:8000/Main.elm](http://localhost:8000/Main.elm)
+
+### Get data from a REST API
+
+Get a message from a REST API and display it.
 
 - use `Html.program` instead of `Html.beginnerProgram` which in turn will
   require creating an `init` function and changing the `update` function to
   return a tuple containing the new model and a command
-- add the `elm-lang/http` package to `elm-package.json`, download it and import
+- add the `elm-lang/http` package to the list of packages and import
   it so that you can use the `Http.send` and `Http.get` methods, as shown in the
   [documentation](http://package.elm-lang.org/packages/elm-lang/http/latest)
 - add suitable message handling to the `update` method bearing in mind that it
   needs to handle a `Result` which can contain either the expected result or
   an error
 
-## Beyond the workshop
-
-Here are a few ideas of additional things to do to go beyond this workshop.
-
-### Compile to a static file
-
-Rather than run `elm reactor`, we can compile the app to a static `index.html`
-file by running `elm make`:
-
-    elm make Main.elm
-
-You can then open the `index.html` file in a browser as a static file.
-
-### Add per-book interaction
-
-Rather than have a checkbox at the top of the page, we could have each book
-entry act as an independently collapsible section that would extend or
-collapse when clicking on the title. For this you will need to:
-
-- update the `Book` type to include a state flag
-- create an `update` function in the `Book` module and wire it in the
-  `Book.view` function
-- call the `Book.update` function from the `Main.update` one with the correct
-  message
 
 ### Unit testing
 
@@ -216,15 +278,6 @@ You can then run all yor unit tests by typing:
 
 Then write some tests by following
 [the documentation](http://package.elm-lang.org/packages/elm-community/elm-test/latest)!
-
-### Call the app from a static HTML page
-
-One thing that Elm doesn't currently support is the use of an external CSS
-style sheet. This can be fixed by creating a static `index.html` page that
-includes the style sheet and starts the Elm app. You will then need to
-compile the app statically to a JavaScript file:
-
-    elm make Main.elm --output=main.js
 
 ### Add navigation
 
