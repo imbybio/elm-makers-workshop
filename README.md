@@ -81,11 +81,13 @@ The basic Elm syntax is simple:
 - variables and functions are declared in the same way, with an optional type
   definition followed by an implementation:
 
-    defaultModel : String
-    defaultModel = "Hello world!"
+```elm
+defaultModel : String
+defaultModel = "Hello world!"
 
-    view : String -> Html Msg
-    view model = Html.text model
+view : String -> Html Msg
+view model = Html.text model
+```
 
 - lists are defined with square brackets: `[1, 2, 3]` and all items in the list
   need to be of the same type
@@ -139,10 +141,12 @@ can find their documentation online:
 Change the Elm app to introduce the program loop using `Html.beginnerProgram`.
 This function takes a single record argument with 3 fields:
 
-    { model : model
-    , view : model -> Html msg
-    , update : msg -> model -> model
-    }
+```elm
+{ model : model
+, view : model -> Html msg
+, update : msg -> model -> model
+}
+```
 
 The `model` field is a simple value with a parameterised type called `model`
 that will be used to initalise our model. As it's a parameterised type, we can
@@ -159,12 +163,14 @@ for this.
 To implement the program loop, we just need to call `Html.beginnerProgram` in
 our `main` function (note that the type signature changes):
 
-    main : Program Never String msg
-    main = Html.beginnerProgram
-        { model = "Hello, World!"
-        , view = view
-        , update = (\_ -> \model -> model)
-        }
+```elm
+main : Program Never String msg
+main = Html.beginnerProgram
+    { model = "Hello, World!"
+    , view = view
+    , update = (\_ -> \model -> model)
+    }
+```
 
 Note that update is implemented as an inline function. We also need to implement
 the view function. As we decided to use the `String` type for our model, that's
@@ -186,15 +192,19 @@ To do this, you will need to:
 Union types are a bit like an enumeration of possible values except that each
 of them can be a complex type and they are defined as follows:
 
-    type Msg
-        = SayGoodbye
-        | SayHello
+```elm
+type Msg
+    = SayGoodbye
+    | SayHello
+```
 
 In order to check what value a variable of such a type has, we can use a `case`
 statement:
 
-    case msg of
-        SayGoodbye -> "Goodbye, World!"
+```elm
+case msg of
+    SayGoodbye -> "Goodbye, World!"
+```
 
 As we decided to use `Msg` for our message type, the first argument of the
 `update` function will need to be of that type and the signatures of the
