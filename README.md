@@ -73,8 +73,8 @@ The basic Elm syntax is simple:
 
 - module and type names start with an uppercase letter, such as `Html` or `String`;
   note that by convention, a lot of modules define a type of the same name
-- variable and function names start with a lowercase letter, such as `view` or
-  `model`
+- variable, function and parameterised type names start with a lowercase letter,
+  such as `view` or `model`
 - a function is called by just referencing it followed by its arguments, such as
   `view model`, and can be enclosed in braces when grouping is necessary, such
   as `(view model)`.
@@ -105,18 +105,24 @@ of the screen. The default code does 3 things:
 
 - it declares a `Main` module:
 
-    module Main exposing (..)
+```elm
+module Main exposing (..)
+```
 
 - it imports the `Html` module and exposes the `Html.Html` type as well as the
   `Html.text` function:
 
-    import Html exposing (Html, text)
+```elm
+import Html exposing (Html, text)
+```
 
 - it declares and implements a `main` function:
 
-    main : Html a
-    main =
-        text "Hello, World!"
+```elm
+main : Html a
+main =
+    text "Hello, World!"
+```
 
 This is very simple but not very useful as it is just a static piece of code
 and doesn't implement the Elm loop mentioned above.
@@ -128,7 +134,7 @@ can find their documentation online:
 - [elm-lang/core](http://package.elm-lang.org/packages/elm-lang/core/latest/)
 - [elm-lang/html](http://package.elm-lang.org/packages/elm-lang/html/latest)
 
-### Implement the Elm loop
+### Start the Elm program loop
 
 Change the Elm app to introduce the program loop using `Html.beginnerProgram`.
 This function takes a single record argument with 3 fields:
