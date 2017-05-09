@@ -43,7 +43,7 @@ able to run your programme.
 
 This may sound cumbersome but it prevents a whole class of bugs that more
 flexible languages can be prone to. For example, if you have a data type that is
-defined as have a field called `title`, you can safely extract the value of
+defined as having a field called `title`, you can safely extract the value of
 the `title` field out of any data structure of that type, this will never result
 in an exception.
 
