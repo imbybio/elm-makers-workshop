@@ -12,7 +12,7 @@ license so feel free to update and share it as you wish.
 There are no pre-requisites for this workshop as everything will be done in
 a web browser.
 
-## Elm: the basics
+## Introduction
 
 ### Why is Elm different?
 
@@ -92,7 +92,7 @@ The basic Elm syntax is simple:
 - records are defined with curly brackets: `{ name = "Bob", age = 23 }` and
   each field can have its own type
 
-## Tasks
+## Worksheet
 
 ### Ellie and a first Elm app
 
