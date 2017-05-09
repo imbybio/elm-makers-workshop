@@ -1,6 +1,6 @@
 # Makers Academy Elm workshop
 
-This repository contains the code and explanation required to follow the
+This repository contains the explanations required to follow the
 Makers Academy Elm workshop given in London on 10th May 2017. The idea is
 to build a very simple 'hello world' Elm app.
 
