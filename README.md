@@ -173,7 +173,7 @@ type alias KeyValuePair a =
 `a` is the parameterised type and is then specified by code that creates
 instances of that type:
 
-```
+```elm
 kv1 : KeyValuePair String
 kv1 =
     { key = "one"
