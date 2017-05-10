@@ -328,6 +328,21 @@ a button is clicked. You will need to:
 
 Here are a few ideas of additional things to do to go beyond this workshop.
 
+### The Maybe module
+
+The core package includes a module called `Maybe` that is imported by default.
+This module declares the `Maybe` type that makes it possible to handle values
+that may or may not exist (equivalent to JavaScript `null`):
+
+```elm
+type Maybe a
+    = Just a
+    | Nothing
+```
+
+Have a look at its [documentation](http://package.elm-lang.org/packages/elm-lang/core/latest/Maybe)
+and try to use it.
+
 ### Compile locally
 
 Reproduce everything by installing the Elm compiler on your machine so that
