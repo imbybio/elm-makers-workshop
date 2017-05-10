@@ -186,7 +186,7 @@ kv2 = KeyValuePair "two" 2
 
 ## Worksheet
 
-### Ellie and a first Elm app
+### 1. Ellie and a first Elm app
 
 We are going to use the Ellie web app for this tutorial. Ellie is a web based
 Elm editor and compiler, which you can find at: [https://ellie-app.com/](https://ellie-app.com/)
@@ -226,7 +226,7 @@ can find their documentation online:
 - [elm-lang/core](http://package.elm-lang.org/packages/elm-lang/core/latest/)
 - [elm-lang/html](http://package.elm-lang.org/packages/elm-lang/html/latest)
 
-### Start the Elm program loop
+### 2. Start the Elm program loop
 
 Change the Elm app to introduce the program loop using `Html.beginnerProgram`.
 This function takes a single record argument with 3 fields:
@@ -274,7 +274,7 @@ should match. Implement the function so that the text is included in an HTML
 `p` tag. Most functions in the `Html` package, and in particular the `p`
 function take two arguments: a list of HTML attributes and a list of sub-tags.
 
-### Add a button that changes the model
+### 3. Add a button that changes the model
 
 Change the app to include a button that changes the model to `"Goodbye, World!"`.
 To do this, you will need to:
@@ -307,14 +307,14 @@ As we decided to use `Msg` for our message type, the first argument of the
 `String` for our model type, the second argument of the `update` function
 will need to be of that type.
 
-### Update the text via a text field
+### 4. Update the text via a text field
 
 Another way to update the text is to take user input via a test field. To do
 that, you will need to add another message that is able to take a `String` as
 a parameter so that is can be used by `Html.Events.onInput` and wire that
 message in the `view` function.
 
-### Update the text on button click
+### 5. Update the text on button click
 
 With the previous implementation, the text is updated as soon as any character
 is entered in the text box. Change the program so that it's only updated when
