@@ -238,16 +238,21 @@ This function takes a single record argument with 3 fields:
 }
 ```
 
+and returns of value of type:
+
+```elm
+Program Never model msg
+```
+
 The `model` field is a simple value with a parameterised type called `model`
 that will be used to initalise our model. As it's a parameterised type, we can
-choose to use any type we want, in our case it will be a string set to the
-value `"Hello, World!"`.
+choose to use any type we want, in our case it will be a string.
 
 The `view` field is a function that takes one argument of type `model` and
 returns a value of type `Html msg`. We will implement that function explicitly.
 
 The `update` field is a function that takes two arguments of types `msg` and
-`model` and returns a value of type `model`. We will provide a dummy value
+`model` and returns a value of type `model`. We will provide a dummy implementation
 for this.
 
 To implement the program loop, we just need to call `Html.beginnerProgram` in
