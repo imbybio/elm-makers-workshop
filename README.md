@@ -78,7 +78,11 @@ The basic Elm syntax is simple:
 - a function is called by just referencing it followed by its arguments, such as
   `view model`, and can be enclosed in braces when grouping is necessary, such
   as `(view model)`.
-- variables and functions are declared in the same way, with an optional type
+- lists are defined with square brackets: `[1, 2, 3]` and all items in the list
+  need to be of the same type
+- records are defined with curly brackets: `{ name = "Bob", age = 23 }` and
+  each field can have its own type
+- constant and function declarations both start with an optional type
   definition followed by an implementation:
 
 ```elm
@@ -87,12 +91,98 @@ defaultModel = "Hello world!"
 
 view : String -> Html Msg
 view model = Html.text model
+
+update : Msg -> String -> String
+update msg model = model
 ```
 
-- lists are defined with square brackets: `[1, 2, 3]` and all items in the list
-  need to be of the same type
-- records are defined with curly brackets: `{ name = "Bob", age = 23 }` and
-  each field can have its own type
+### Data types
+
+#### Union types
+
+Elm types are [union types](https://guide.elm-lang.org/types/union_types.html)
+that make it possible to define data with variable shape. They are declared as
+a list of possible shapes:
+
+```elm
+type Msg
+    = SayGoodbye
+    | Say String
+```
+
+The example above defines a type that can take two forms:
+
+- the `SayGoodbye` form that is a simple marker with no additional data
+- the `Say` form that is a marker followed by a `String` that carries
+  additional data
+
+As a side effect, each form declares a constructor function of the same name
+so you can create values of those types by calling those constructors:
+
+```elm
+goodbye = SayGoodbye
+
+hello = Say "Hello"
+```
+
+#### Record types aka type aliases
+
+Elm has the concept of records, structures with named fields equivalent to
+JavaScript objects, such as:
+
+```elm
+{ key : String
+, value : String
+}
+```
+
+However, this would be very cumbersome to type all the time so Elm provides
+type aliases to make it simpler to use:
+
+```elm
+type alias KeyValuePair =
+    { key : String
+    , value : String
+    }
+```
+
+As a side effect, it declares a constructor function of the same name as the
+type alias so you can create an instance of this type in one of two ways:
+
+```elm
+kv1 =
+    { key = "one"
+    , value = "un"
+    }
+
+kv2 = KeyValuePair "two" "deux"
+```
+
+#### Parameterised types
+
+Type annotations can be parmeterised to make them flexible and re-usable. For
+instance, we could parameterise the `KeyValuePair` type above:
+
+```elm
+type alias KeyValuePair a =
+    { key: String
+    , value : a
+    }
+```
+
+`a` is the parameterised type and is then specified by code that creates
+instances of that type:
+
+```
+kv1 : KeyValuePair String
+kv1 =
+    { key = "one"
+    , value = "un"
+    }
+
+kv2 : KeyValuePair Int
+kv2 = KeyValuePair "two" 2
+```
 
 ## Worksheet
 
