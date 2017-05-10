@@ -305,7 +305,7 @@ As we decided to use `Msg` for our message type, the first argument of the
 `update` function will need to be of that type and the signatures of the
 `main` and `view` functions will need to reflect this. As we decided to use
 `String` for our model type, the second argument of the `update` function
-will need to be of that type.
+and its return type will need to be of that type.
 
 ### 4. Update the text via a text field
 
